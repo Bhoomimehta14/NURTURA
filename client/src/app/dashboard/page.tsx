@@ -26,6 +26,7 @@ import {
 
 export default function Dashboard() {
   const [activeNav, setActiveNav] = useState('dashboard');
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const currentDate = new Date();
   const formattedDate = currentDate.toLocaleDateString('en-US', {
@@ -65,7 +66,7 @@ export default function Dashboard() {
 
   const navItems = [
     { id: 'dashboard', icon: Home, label: 'Dashboard', color: '#8FAF9A', href: '/dashboard' },
-    { id: 'medicine', icon: Stethoscope, label: 'Medicine & Doctor', color: '#D48A96', href: '/medicine' },
+    { id: 'medicine', icon: Stethoscope, label: 'MedLog', color: '#D48A96', href: '/medicine' },
     { id: 'family', icon: Users, label: 'Family', color: '#E59A4F', href: '/family' },
     { id: 'tree', icon: TreeDeciduous, label: 'Tree', color: '#8FAF9A', href: '/tree' },
   ];
@@ -87,7 +88,7 @@ export default function Dashboard() {
   return (
     <div className="min-h-screen bg-warm-beige flex">
       {/* Main Content Area */}
-      <main className="flex-1 pr-80">
+      <main className={`flex-1 transition-all duration-300 ${sidebarOpen ? 'pr-80' : 'pr-20'}`}>
         <div className="max-w-6xl mx-auto px-8 py-8">
 
           {/* Bot Greeting Section */}
@@ -410,26 +411,33 @@ export default function Dashboard() {
         </div>
       </main>
 
-      {/* Right Navigation Panel */}
-      <nav className="fixed right-0 top-0 bottom-0 w-80 bg-white border-l border-indigo-dust/10 flex flex-col">
-        {/* Logo */}
-        <div className="p-6 border-b border-indigo-dust/5">
-          <div className="flex items-center gap-3">
+      {/* Right Navigation Panel - Collapsible */}
+      <nav className={`fixed right-0 top-0 bottom-0 bg-white border-l border-indigo-dust/10 flex flex-col transition-all duration-300 ${sidebarOpen ? 'w-80' : 'w-20'}`}>
+        {/* Logo - Click to toggle */}
+        <button
+          onClick={() => setSidebarOpen(!sidebarOpen)}
+          className="p-4 border-b border-indigo-dust/5 hover:bg-peach-cream/20 transition-colors"
+        >
+          <div className={`flex items-center ${sidebarOpen ? 'gap-3' : 'justify-center'}`}>
             <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-matcha-soft via-azure-mist to-orchid-pastel flex items-center justify-center shadow-lg">
               <TreeDeciduous className="w-7 h-7 text-white" />
             </div>
-            <div>
-              <span className="text-xl font-bold text-indigo-dust">Nurtura</span>
-              <p className="text-xs text-indigo-dust/50">Family Health Hub</p>
-            </div>
+            {sidebarOpen && (
+              <div>
+                <span className="text-xl font-bold text-indigo-dust">Nurtura</span>
+                <p className="text-xs text-indigo-dust/50">Family Health Hub</p>
+              </div>
+            )}
           </div>
-        </div>
+        </button>
 
         {/* Navigation */}
-        <div className="flex-1 p-4 overflow-y-auto">
-          <p className="text-xs font-semibold text-indigo-dust/40 uppercase tracking-wider mb-3 px-3">
-            Menu
-          </p>
+        <div className="flex-1 p-4">
+          {sidebarOpen && (
+            <p className="text-xs font-semibold text-indigo-dust/40 uppercase tracking-wider mb-3 px-3">
+              Menu
+            </p>
+          )}
           <div className="space-y-2">
             {navItems.map((item) => {
               const Icon = item.icon;
@@ -439,7 +447,7 @@ export default function Dashboard() {
                   key={item.id}
                   href={item.href}
                   onClick={() => setActiveNav(item.id)}
-                  className={`w-full flex items-center gap-4 px-4 py-4 rounded-2xl transition-all ${
+                  className={`w-full flex items-center ${sidebarOpen ? 'gap-4 px-4' : 'justify-center px-2'} py-4 rounded-2xl transition-all ${
                     isActive
                       ? 'text-white shadow-lg'
                       : 'text-indigo-dust/70 hover:bg-peach-cream/30'
@@ -448,89 +456,76 @@ export default function Dashboard() {
                     backgroundColor: isActive ? item.color : undefined,
                     boxShadow: isActive ? `0 10px 30px ${item.color}40` : undefined,
                   }}
+                  title={!sidebarOpen ? item.label : undefined}
                 >
                   <Icon className="w-5 h-5" />
-                  <span className="font-medium">{item.label}</span>
-                  {isActive && <ChevronRight className="w-4 h-4 ml-auto" />}
+                  {sidebarOpen && (
+                    <>
+                      <span className="font-medium">{item.label}</span>
+                      {isActive && <ChevronRight className="w-4 h-4 ml-auto" />}
+                    </>
+                  )}
                 </Link>
               );
             })}
           </div>
-
-          {/* Family Section */}
-          <div className="mt-8">
-            <p className="text-xs font-semibold text-indigo-dust/40 uppercase tracking-wider mb-3 px-3">
-              Family Members
-            </p>
-            <div className="space-y-2">
-              {familyMembers.map((member, index) => (
-                <div
-                  key={index}
-                  className="flex items-center gap-3 p-3 rounded-2xl hover:bg-white transition-colors cursor-pointer"
-                  style={{ backgroundColor: `${member.color}10` }}
-                >
-                  <div
-                    className="w-10 h-10 rounded-xl flex items-center justify-center text-xl"
-                    style={{ backgroundColor: `${member.color}30` }}
-                  >
-                    {member.emoji}
-                  </div>
-                  <div className="flex-1">
-                    <p className="font-medium text-indigo-dust text-sm">{member.name}</p>
-                    <p className="text-xs text-indigo-dust/50">{member.relation}</p>
-                  </div>
-                  <span
-                    className="w-2 h-2 rounded-full"
-                    style={{ backgroundColor: member.status === 'All good' ? '#8FAF9A' : '#E59A4F' }}
-                  />
-                </div>
-              ))}
-            </div>
-          </div>
         </div>
 
         {/* User Profile */}
-        <div className="p-4 border-t border-indigo-dust/5 bg-gradient-to-t from-peach-cream/30 to-white">
-          <div className="p-4 rounded-2xl bg-gradient-to-br from-orchid-pastel/15 via-azure-mist/10 to-matcha-soft/15 border border-orchid-pastel/20">
-            <div className="flex items-center gap-3 mb-3">
-              <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-orchid-pastel to-azure-mist flex items-center justify-center shadow-md">
-                <span className="text-2xl">👩‍🦳</span>
+        {sidebarOpen && (
+          <div className="p-4 border-t border-indigo-dust/5 bg-gradient-to-t from-peach-cream/30 to-white">
+            <div className="p-4 rounded-2xl bg-gradient-to-br from-orchid-pastel/15 via-azure-mist/10 to-matcha-soft/15 border border-orchid-pastel/20">
+              <div className="flex items-center gap-3 mb-3">
+                <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-orchid-pastel to-azure-mist flex items-center justify-center shadow-md">
+                  <span className="text-2xl">👩‍🦳</span>
+                </div>
+                <div className="flex-1">
+                  <p className="font-semibold text-indigo-dust text-lg">Margaret Wilson</p>
+                  <p className="text-indigo-dust/60 text-sm flex items-center gap-1">
+                    <Star className="w-3 h-3 text-sunset-sorbet" fill="#E59A4F" />
+                    Premium Member
+                  </p>
+                </div>
               </div>
-              <div className="flex-1">
-                <p className="font-semibold text-indigo-dust text-lg">Margaret Wilson</p>
-                <p className="text-indigo-dust/60 text-sm flex items-center gap-1">
-                  <Star className="w-3 h-3 text-sunset-sorbet" fill="#E59A4F" />
-                  Premium Member
-                </p>
-              </div>
-            </div>
 
-            <div className="space-y-2 pt-3 border-t border-indigo-dust/10">
-              <div className="flex items-center justify-between">
-                <span className="text-xs text-indigo-dust/50">Age</span>
-                <span className="text-sm font-medium text-indigo-dust">68 years</span>
-              </div>
-              <div className="flex items-center justify-between">
-                <span className="text-xs text-indigo-dust/50">Blood Type</span>
-                <span className="text-sm font-medium text-indigo-dust">O+</span>
-              </div>
-              <div className="pt-2">
-                <span className="text-xs text-indigo-dust/50">Health Conditions</span>
-                <div className="flex flex-wrap gap-1.5 mt-1.5">
-                  <span className="px-2 py-1 bg-orchid-pastel/25 text-orchid-pastel text-xs font-medium rounded-lg">
-                    Hypertension
-                  </span>
-                  <span className="px-2 py-1 bg-azure-mist/25 text-azure-mist text-xs font-medium rounded-lg">
-                    Diabetes Type 2
-                  </span>
-                  <span className="px-2 py-1 bg-sunset-sorbet/20 text-sunset-sorbet text-xs font-medium rounded-lg">
-                    Arthritis
-                  </span>
+              <div className="space-y-2 pt-3 border-t border-indigo-dust/10">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs text-indigo-dust/50">Age</span>
+                  <span className="text-sm font-medium text-indigo-dust">68 years</span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-xs text-indigo-dust/50">Blood Type</span>
+                  <span className="text-sm font-medium text-indigo-dust">O+</span>
+                </div>
+                <div className="pt-2">
+                  <span className="text-xs text-indigo-dust/50">Health Conditions</span>
+                  <div className="flex flex-wrap gap-1.5 mt-1.5">
+                    <span className="px-2 py-1 bg-orchid-pastel/25 text-orchid-pastel text-xs font-medium rounded-lg">
+                      Hypertension
+                    </span>
+                    <span className="px-2 py-1 bg-azure-mist/25 text-azure-mist text-xs font-medium rounded-lg">
+                      Diabetes Type 2
+                    </span>
+                    <span className="px-2 py-1 bg-sunset-sorbet/20 text-sunset-sorbet text-xs font-medium rounded-lg">
+                      Arthritis
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
+        )}
+
+        {/* Collapsed User Avatar */}
+        {!sidebarOpen && (
+          <div className="p-4 border-t border-indigo-dust/5">
+            <div className="flex justify-center">
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-orchid-pastel to-azure-mist flex items-center justify-center shadow-md">
+                <span className="text-xl">👩‍🦳</span>
+              </div>
+            </div>
+          </div>
+        )}
       </nav>
     </div>
   );
