@@ -1,0 +1,19 @@
+{
+  "name": "carenest-healthcare-platform",
+  "version": "1.0.0",
+  "description": "Healthcare family platform - caring for every generation",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
+    "dev:client": "cd client && npm run dev",
+    "dev:server": "cd server && npm run dev",
+    "install:all": "npm install && cd client && npm install && cd ../server && npm install",
+    "build": "cd client && npm run build",
+    "start": "concurrently \"npm run start:server\" \"npm run start:client\"",
+    "start:client": "cd client && npm run start",
+    "start:server": "cd server && npm run start"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.0"
+  }
+}
