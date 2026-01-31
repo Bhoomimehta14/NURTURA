@@ -22,6 +22,7 @@ import {
   Activity,
   Clock,
   Star,
+  LogOut,
 } from 'lucide-react';
 
 export default function Dashboard() {
@@ -513,18 +514,30 @@ export default function Dashboard() {
                 </div>
               </div>
             </div>
+
+            {/* Logout Button */}
+            <Link
+              href="/"
+              className="mt-4 w-full flex items-center justify-center gap-3 px-4 py-4 bg-orchid-pastel text-white font-semibold rounded-2xl transition-all hover:opacity-90 shadow-md"
+            >
+              <LogOut className="w-5 h-5" />
+              Log Out
+            </Link>
           </div>
         )}
 
         {/* Collapsed User Avatar */}
         {!sidebarOpen && (
-          <div className="p-4 border-t border-indigo-dust/5">
+          <button
+            onClick={() => setSidebarOpen(true)}
+            className="p-4 border-t border-indigo-dust/5 hover:bg-peach-cream/20 transition-colors"
+          >
             <div className="flex justify-center">
               <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-orchid-pastel to-azure-mist flex items-center justify-center shadow-md">
                 <span className="text-xl">👩‍🦳</span>
               </div>
             </div>
-          </div>
+          </button>
         )}
       </nav>
     </div>

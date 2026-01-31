@@ -412,17 +412,17 @@ export default function SeniorDashboard() {
               </div>
             </button>
 
-            {/* Family Tree Card */}
+            {/* Growth Tree Card */}
             <Link
-              href="/family"
-              className="bg-white rounded-3xl p-8 shadow-md border border-indigo-dust/10 hover:shadow-lg hover:border-sunset-sorbet/50 transition-all text-left group"
+              href="/tree"
+              className="bg-white rounded-3xl p-8 shadow-md border border-indigo-dust/10 hover:shadow-lg hover:border-matcha-soft/50 transition-all text-left group"
             >
-              <div className="w-20 h-20 rounded-2xl bg-sunset-sorbet/20 flex items-center justify-center mb-5 group-hover:bg-sunset-sorbet/30 transition-colors">
-                <TreeDeciduous className="w-10 h-10 text-sunset-sorbet" />
+              <div className="w-20 h-20 rounded-2xl bg-matcha-soft/20 flex items-center justify-center mb-5 group-hover:bg-matcha-soft/30 transition-colors">
+                <TreeDeciduous className="w-10 h-10 text-matcha-soft" />
               </div>
-              <h3 className="text-2xl font-bold text-indigo-dust mb-2">Family Tree</h3>
-              <p className="text-lg text-indigo-dust/60">See your loved ones</p>
-              <div className="flex items-center gap-2 mt-4 text-sunset-sorbet">
+              <h3 className="text-2xl font-bold text-indigo-dust mb-2">Growth Tree</h3>
+              <p className="text-lg text-indigo-dust/60">Grow together with love</p>
+              <div className="flex items-center gap-2 mt-4 text-matcha-soft">
                 <span className="text-lg font-medium">Open</span>
                 <ChevronRight className="w-6 h-6" />
               </div>
