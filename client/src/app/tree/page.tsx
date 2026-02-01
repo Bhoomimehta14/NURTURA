@@ -21,7 +21,7 @@ export default function TreePage() {
         <div className="max-w-2xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             <Link
-              href="/dashboard"
+              href="/senior"
               className="w-12 h-12 rounded-xl bg-matcha-soft/20 flex items-center justify-center hover:bg-matcha-soft/30 transition-colors"
             >
               <ArrowLeft className="w-6 h-6 text-matcha-soft" />
