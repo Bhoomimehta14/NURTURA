@@ -492,7 +492,7 @@ export default function Dashboard() {
               <div className="space-y-2 pt-3 border-t border-indigo-dust/10">
                 <div className="flex items-center justify-between">
                   <span className="text-xs text-indigo-dust/50">Age</span>
-                  <span className="text-sm font-medium text-indigo-dust">68 years</span>
+                  <span className="text-sm font-medium text-indigo-dust">26 years</span>
                 </div>
                 <div className="flex items-center justify-between">
                   <span className="text-xs text-indigo-dust/50">Blood Type</span>

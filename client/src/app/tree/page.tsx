@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import {
   TreeDeciduous,
@@ -12,6 +13,7 @@ import {
 import GrowthTree from '@/components/GrowthTree';
 
 export default function TreePage() {
+  const router = useRouter();
   const [completedTasks] = useState(3);
 
   return (
@@ -20,12 +22,12 @@ export default function TreePage() {
       <header className="bg-white/80 backdrop-blur-sm border-b border-matcha-soft/20 sticky top-0 z-10">
         <div className="max-w-2xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
-            <Link
-              href="/senior"
+            <button
+              onClick={() => router.back()}
               className="w-12 h-12 rounded-xl bg-matcha-soft/20 flex items-center justify-center hover:bg-matcha-soft/30 transition-colors"
             >
               <ArrowLeft className="w-6 h-6 text-matcha-soft" />
-            </Link>
+            </button>
             <div className="text-center">
               <h1 className="text-2xl font-bold text-indigo-dust flex items-center gap-2 justify-center">
                 <TreeDeciduous className="w-7 h-7 text-matcha-soft" />
