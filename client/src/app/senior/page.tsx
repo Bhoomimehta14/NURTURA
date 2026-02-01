@@ -128,8 +128,8 @@ export default function SeniorDashboard() {
 
   const speakText = (text: string) => {
     if ('speechSynthesis' in window) {
-      // Remove emojis for speech
-      const cleanText = text.replace(/[\u{1F300}-\u{1F9FF}]|[\u{2600}-\u{26FF}]|[\u{2700}-\u{27BF}]/gu, '');
+      // Remove emojis for speech (removes all non-ASCII characters)
+      const cleanText = text.replace(/[^\x00-\x7F]/g, '');
       const utterance = new SpeechSynthesisUtterance(cleanText);
       utterance.rate = 0.75; // Slower, calmer pace for seniors
       utterance.pitch = 1.1; // Slightly higher, friendlier pitch
